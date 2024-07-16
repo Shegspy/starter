@@ -67,6 +67,8 @@ const rest2 = {
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 for (const item of menu) console.log(item);
+
+for (let i = 0; (i = menu.length); i++) console.log(menu[i]);
 // Or assignment Operator
 // rest1.numGuests = rest1.numGuests || 10;
 // rest2.numGuests = rest2.numGuests || 10;
