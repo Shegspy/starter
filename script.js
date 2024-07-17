@@ -1,5 +1,22 @@
 'use strict';
 
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  [`day-${2 + 4}`]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
@@ -11,64 +28,58 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  openingHours,
+  // openingHours: openingHours,
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-
-  order: function (startIndex, mainIndex) {
+  order(startIndex, mainIndex) {
     return [this.starterMenu[startIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivered: function ({
-    startIndex = 0,
-    mainIndex = 0,
-    time = '20:40',
-    address,
-  }) {
+  orderDelivered({ startIndex = 0, mainIndex = 0, time = '20:40', address }) {
     console.log(
       `Order recieved! ${this.starterMenu[startIndex]} and ${this.mainMenu[mainIndex]} will be delevered to ${address} at ${time}`
     );
   },
 
-  orderPasta: function (ing1, ing2, ing3) {
+  orderPasta(ing1, ing2, ing3) {
     console.log(
       `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}`
     );
   },
 
-  orderPizza: function (mainIndregient, ...otherIngredient) {
+  orderPizza(mainIndregient, ...otherIngredient) {
     console.log(mainIndregient, otherIngredient);
   },
 };
 
-const rest1 = {
-  name: 'Tope',
-  numGuests: 0,
-};
+// const rest1 = {
+//   name: 'Tope',
+//   numGuests: 0,
+// };
 
-const rest2 = {
-  name: 'Yemi',
-  owner: 'Frank Edward',
-};
+// const rest2 = {
+//   name: 'Yemi',
+//   owner: 'Frank Edward',
+// };
+
+/*
+`
 
 // for loop ES6
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 for (const item of menu) console.log(item);
 
-for (let i = 0; (i = menu.length); i++) console.log(menu[i]);
+for (const item of menu.entries()) console.log(item);
+
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+// console.log([...menu.entries()]);
+
+// for (let i = 0; (i = menu.length); i++) console.log(menu[i]);
+
 // Or assignment Operator
 // rest1.numGuests = rest1.numGuests || 10;
 // rest2.numGuests = rest2.numGuests || 10;
@@ -87,7 +98,7 @@ for (let i = 0; (i = menu.length); i++) console.log(menu[i]);
 // console.log(rest1);
 // console.log(rest2);
 
-/*
+
 // Nullish Coelencin Operator
 restaurant.numGuests = 0;
 const guest = restaurant.numGuests || 10;
